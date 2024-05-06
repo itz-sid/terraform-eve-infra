@@ -31,5 +31,5 @@ variable "mydomain" {
 
 variable "hostname" {
   description = "my hostname"
-  type        = string 
+  type        = string
 }
