@@ -72,3 +72,8 @@ resource "aws_instance" "frontend" {
     Env     = "${var.project_env}"
   }
 }
+
+resource "aws_eip" "frontend" {
+  instance = aws_instance.frontend.id
+  domain   = "vpc"
+}
