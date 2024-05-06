@@ -9,6 +9,7 @@ resource "aws_key_pair" "auth_key" {
   }
 }
 
+
 resource "aws_security_group" "frontend_access" {
 
   name        = "${var.project_name}-${var.project_env}-frontend"
@@ -59,6 +60,7 @@ resource "aws_security_group" "frontend_access" {
   }
 }
 
+
 resource "aws_instance" "frontend" {
 
   ami                    = var.instance_ami
@@ -76,4 +78,14 @@ resource "aws_instance" "frontend" {
 resource "aws_eip" "frontend" {
   instance = aws_instance.frontend.id
   domain   = "vpc"
+}
+
+
+resource "aws_route53_record" "frotned" {
+
+  zone_id = data.aws_route53_zone.public.zone_id
+  name    = "${var.hostname}.${var.mydomain}"
+  type    = "A"
+  ttl     = "300"
+  records = [aws_eip.frontend.public_ip]
 }
