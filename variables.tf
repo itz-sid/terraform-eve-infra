@@ -31,5 +31,9 @@ variable "mydomain" {
 
 variable "hostname" {
   description = "my hostname"
+<<<<<<< HEAD
   type        = string 
+=======
+  type        = string
+>>>>>>> monitoring-service
 }

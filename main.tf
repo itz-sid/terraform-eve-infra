@@ -35,7 +35,6 @@ resource "aws_security_group" "frontend_access" {
   }
 
   ingress {
-
     from_port        = 22
     to_port          = 22
     protocol         = "tcp"
@@ -43,6 +42,13 @@ resource "aws_security_group" "frontend_access" {
     ipv6_cidr_blocks = ["::/0"]
   }
 
+  ingress {
+    from_port        = 9090
+    to_port          = 9090
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
   egress {
 
     from_port        = 0
@@ -69,9 +75,10 @@ resource "aws_instance" "frontend" {
   vpc_security_group_ids = [aws_security_group.frontend_access.id]
   user_data              = file("setup.sh")
   tags = {
-    Name    = "${var.project_name}-${var.project_env}-frontend"
-    Project = "${var.project_name}"
-    Env     = "${var.project_env}"
+    Name       = "${var.project_name}-${var.project_env}-frontend"
+    Project    = "${var.project_name}"
+    Env        = "${var.project_env}"
+    Monitoring = "true"
   }
 }
 
